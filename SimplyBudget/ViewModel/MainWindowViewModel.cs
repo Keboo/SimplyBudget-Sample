@@ -1,10 +1,10 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using MaterialDesignThemes.Wpf;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using MaterialDesignThemes.Wpf;
 
 namespace SimplyBudget.ViewModel
 {
@@ -35,6 +35,7 @@ namespace SimplyBudget.ViewModel
                     Description = dialogVieWModel.Description
                 };
                 Transactions.Add(newTransaction);
+                throw new Exception("Sample crash");
             }
         }
 

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using System.Windows;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using SimplyBudget.Properties;
 
 namespace SimplyBudget
 {
@@ -13,5 +12,12 @@ namespace SimplyBudget
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            AppCenter.LogLevel = LogLevel.Verbose;
+            AppCenter.Start(Settings.Default.AppCenterKey, typeof(Analytics), typeof(Crashes));
+        }
     }
 }
