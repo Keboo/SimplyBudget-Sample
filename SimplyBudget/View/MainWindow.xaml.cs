@@ -1,4 +1,5 @@
-﻿using SimplyBudget.ViewModel;
+﻿using SimplyBudget.Services;
+using SimplyBudget.ViewModel;
 
 namespace SimplyBudget.View
 {
@@ -10,7 +11,7 @@ namespace SimplyBudget.View
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+            DataContext = new MainWindowViewModel(new DialogService());
         }
     }
 }

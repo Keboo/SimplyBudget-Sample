@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MaterialDesignThemes.Wpf;
+using SimplyBudget.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -10,14 +11,17 @@ namespace SimplyBudget.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private readonly IDialogService _DialogService;
+
         public IList<Transaction> Transactions { get; } 
             = new ObservableCollection<Transaction>();
 
         public ICommand AddTransaction { get; }
         public ICommand RemoveTransaction { get; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IDialogService dialogService)
         {
+            _DialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             AddTransaction = new RelayCommand(OnAddTransaction);
             RemoveTransaction = new RelayCommand<Transaction>(OnRemoveTransaction);
         }
@@ -25,17 +29,14 @@ namespace SimplyBudget.ViewModel
         private async void OnAddTransaction()
         {
             var dialogVieWModel = new AddTransactionViewModel();
-
-            //TODO: Start here: fix Unit Test
-            if (await DialogHost.Show(dialogVieWModel) is bool shouldAddTransaction && 
-                shouldAddTransaction)
+            
+            if (await _DialogService.Show(dialogVieWModel))
             {
                 var newTransaction = new Transaction
                 {
                     Description = dialogVieWModel.Description
                 };
                 Transactions.Add(newTransaction);
-                throw new Exception("Sample crash");
             }
         }
 
